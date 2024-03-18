@@ -1,7 +1,15 @@
 # Texture-GS: Disentangling the Geometry and Texture for 3D Gaussian Splatting Editing
 The official repo for "[Texture-GS: Disentangling the Geometry and Texture for 3D Gaussian Splatting Editing](https://arxiv.org/pdf/2403.10050.pdf)"
 
+<p align="center">
+<a href="https://arxiv.org/pdf/2403.10050.pdf"><img src="https://img.shields.io/badge/Arxiv-2403.10050-B31B1B.svg"></a>
+<a href="https://slothfulxtx.github.io/TexGS/"><img src="https://img.shields.io/badge/Project-Page-blue"></a>
+</p>
+
 ## :mega: Updates
+
+[18/3/2024] The project page is created.
+
 [18/3/2024] The official repo is initialized.
 
 ## Abstract
@@ -16,7 +24,7 @@ The official repo for "[Texture-GS: Disentangling the Geometry and Texture for 3
 
 ## TODO
 
-- [ ] Release the demo page and more video results.
+- [x] Release the demo page and more video results.
 - [ ] Release the code. 
 
 ## Citation
