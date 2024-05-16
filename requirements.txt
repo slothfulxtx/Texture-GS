@@ -1,0 +1,21 @@
+tensorboard
+numpy==1.23.4
+tqdm
+opencv-python
+pyyaml
+addict
+plyfile
+imageio
+scikit-image
+lpips
+git+https://gitlab.inria.fr/bkerbl/simple-knn.git
+git+https://github.com/NVlabs/nvdiffrast
+git+https://github.com/NVlabs/tiny-cuda-nn/#subdirectory=bindings/torch
+git+https://github.com/slothfulxtx/diff-gaussian-rasterization.git
+git+https://github.com/slothfulxtx/???
+
+## Texture-GS Viewer only ##
+glfw
+PyGLM
+imgui
+PyOpenGL

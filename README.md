@@ -25,17 +25,34 @@ The official repo for "[Texture-GS: Disentangling the Geometry and Texture for 3
 ## TODO
 
 - [x] Release the demo page and more video results.
-- [ ] Release the code. 
+- [X] Release the code.
+- [ ] Add more explanations. 
 
 ## Requirements
 
+Our experiements are conducted on the platform with `CUDA=11.7`, `torch==1.13.1` and `pytorch3d==0.7.6`. However, other version should also be compatible. 
+
+Other dependencies have been listed in the `requirements.txt`. 
+
 ## Dataset Preparation
+
+**DTU dataset**: We follow [Relightable 3D Gaussian](https://github.com/NJU-3DV/Relightable3DGaussian) to prepare DTU data, which contains a foreground mask and a psedo-ground truth normal maps for each scenes. Download the zip file of preprocessed DTU data [here](https://box.nju.edu.cn/f/d9858b670ab9480fb526/?dl=1) and then create a soft link to `data/dtu/`. 
+
+**NeRF Synthetic dataset**: Download the NeRF synthetic dataset from LINK[https://drive.google.com/drive/folders/1JDdLGDruGNXWnM1eqY1FNL9PlStjaKWi?usp=drive_link] provided by NeRF and then create a soft link to `data/nerf_synthetic/`.
+
+**Any obj file**: To create your synthetic dataset from obj files, such as Objaverse or Google Scanned Objects, we provide a preprocess script to render NeRF synthetic format dataset. Run the following script
+
+```shell
+
+```
+
+:warning: **Limitations** :warning:: We define the texture space as a unit sphere, which is ill-suited to represent multiple objects, objects with complex geometry(e.g. NeRF Synthetic chair, lego) or outdoor scenes.
 
 ## Get Started
 
 ## View Texture-GS with OpenGL
 
-## Train Texture-GS from Scratch
+## Train Texture-GS on DTU from Scratch
 
 Our training stage is composed of three steps, including geometry reconstruction, UV mapping learning and texture reconstruction. First, run the training scripts `train.py` and specify the config file `configs/gaussian3d_base.yaml` to obtain the initial 3D Gaussian-based geometry, use `CUDA_VISIBLE_DEVICES` to specify the GPU number
 
@@ -76,6 +93,9 @@ python train.py configs/texture_gaussian3d.yaml
 ```
 
 We take the training process of DTU scan 118 as example. If you want to train Texture-GS on other scenes, such as DTU scan 122, just modify `data_root_dir` in all config files. We train our model with `800*600` resolution images on the DTU dataset to compare with previous works. However, the original resolution `1600*1200` is also supported by setting the following line `resolution: -1`. 
+
+## Train Texture-GS on NeRF Synthetic format dataset from Scratch
+
 
 ## Citation
 
