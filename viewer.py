@@ -248,8 +248,7 @@ def main(cfg, log):
 
 
 def parse_args():
-    # Set up command line argument parser
-    parser = ArgumentParser(description="3D Gaussian Splatting Viewer")
+    parser = ArgumentParser(description="Texture-GS Viewer")
     parser.add_argument('config', help='path to config file')
     parser.add_argument('--resume_from', type=str,
                         default=None, help='path to checkpoint file')

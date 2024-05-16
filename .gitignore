@@ -175,5 +175,8 @@ cython_debug/
 # Data
 /data
 
+# Pretraied models
+/pretrained
+
 # viewer
 *.ini

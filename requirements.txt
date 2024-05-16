@@ -12,7 +12,7 @@ git+https://gitlab.inria.fr/bkerbl/simple-knn.git
 git+https://github.com/NVlabs/nvdiffrast
 git+https://github.com/NVlabs/tiny-cuda-nn/#subdirectory=bindings/torch
 git+https://github.com/slothfulxtx/diff-gaussian-rasterization.git
-git+https://github.com/slothfulxtx/???
+git+https://github.com/slothfulxtx/diff-gauss-uv-tex.git
 
 ## Texture-GS Viewer only ##
 glfw

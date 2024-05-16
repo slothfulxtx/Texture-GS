@@ -19,7 +19,7 @@ The official repo for "[Texture-GS: Disentangling the Geometry and Texture for 3
 ## Texture Swapping with Texture-GS
 
 <p align="center">
-<img src="assets/teaser.png" width="800"/>
+<img src="assets/images/teaser.png" width="800"/>
 </p>
 
 ## TODO
@@ -50,7 +50,44 @@ Other dependencies have been listed in the `requirements.txt`.
 
 ## Get Started
 
+We provide several pretrained models on DTU dataset and other object-level datasets [here](https://drive.google.com/drive/folders/1ZrvFAU2DuiWGw3Y68EFbiXJq8rUa-HuJ?usp=drive_link) to illustrate the appearance editing abilities of Texture-GS, especially global texture swapping. First, download the pretrained models and save them to the direction `pretrained/`. Then, run the following script to change the original texture with our provided creative texture images in `assets/`. Remember to modify `data_root_dir` in the configure file `texture_gaussian3d.yaml` with the corresponding model weights (remove `--load_texture_from` to visualize the original view synthesis results).
+
+```shell
+python retexture.py configs/texture_gaussian3d.yaml \
+    --resume_from pretrained/dtu118.pth \
+    --load_texture_from assets/textures/mosaic.png
+```
+
+The rendered images of DTU 118 with mosaic texture are stored to `output/texture_gaussian3d/tex_[timestamp0]`. Here're two examples of rendered images
+
+<p align="center">
+<img src="assets/images/000032.png" width="400"/>
+<img src="assets/images/000041.png" width="400"/>
+</p>
+
+If you wanna visualize the learned texture images, run the following line to extract the texture image
+
+```shell
+python extract_texture.py configs/texture_gaussian3d.yaml \
+    --resume_from pretrained/dtu118.pth \
+    --save_path pretrained/dtu118_tex.png
+```
+
+Here's the corresponding texture image of pretrained DTU 114
+
+<p align="center">
+<img src="assets/images/dtu118_tex.png" width="400"/>
+</p>
+
 ## View Texture-GS with OpenGL
+
+We provide a real-time Open-GL based renderer for Texture-GS, which is built on source code shared by [Tiny Gaussian Splatting Viewer](https://github.com/limacv/GaussianSplattingViewer). Run the following lines (remove `--load_texture_from` to visualize the original view synthesis results)
+
+```shell
+python viewer.py configs/texture_gaussian3d.yaml \
+    --resume_from pretrained/dtu118.pth \
+    --load_texture_from assets/textures/mosaic.png
+```
 
 ## Train Texture-GS on DTU from Scratch
 
