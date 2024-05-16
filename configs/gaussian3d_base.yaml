@@ -1,0 +1,55 @@
+dataset_cfg:
+  type: scene
+  data_root_dir: data/dtu/DTU_scan118
+  # image_path: "images"
+  eval: True
+  background: [0, 0, 0]
+  save_init_pcd: True
+  save_cameras: True
+  shuffle: True
+  resolution_scales: [1.0]
+  resolution: 2
+
+model_cfg:
+  type: Gaussian3D
+  sh_degree: 3
+
+render_cfg:
+  type: render
+  convert_SHs_python: False
+  compute_cov3D_python: False
+
+train_cfg:
+  num_iterations: 30000
+  visual_iters: [5000, 10000, 15000, 20000, 25000, 30000]
+  ckpt_iters: [5000, 10000, 15000, 20000, 25000, 30000]
+  densification_interval: 100
+  opacity_reset_interval: 3000
+  densify_from_iter: 500
+  densify_until_iter: 15000
+  densify_grad_threshold: 0.0002
+  min_scale_reset_interval: 1000
+  min_scale_reset_from_iter: 4000
+  opacity_prune_interval: 6000
+  opacity_prune_theshold: 0.5
+
+optim_cfg:
+  position_lr_init: 0.00016
+  position_lr_final: 0.0000016
+  position_lr_delay_mult: 0.01
+  position_lr_max_steps: 30000
+  feature_lr: 0.0025
+  opacity_lr: 0.05
+  scaling_lr: 0.005
+  rotation_lr: 0.001
+  percent_dense: 0.01
+  
+loss_cfg:
+  lambda_dssim: 0.2
+  lambda_alpha: 1.0
+  lambda_norm: 0.1
+  norm_range: [2000, Null]
+  lambda_norm_smooth: 0.1
+  norm_smooth_range: [2000, Null]
+  lambda_opacity_reg: 0.001
+  opacity_reg_range: [2000, Null]

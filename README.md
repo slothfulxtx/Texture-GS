@@ -27,6 +27,56 @@ The official repo for "[Texture-GS: Disentangling the Geometry and Texture for 3
 - [x] Release the demo page and more video results.
 - [ ] Release the code. 
 
+## Requirements
+
+## Dataset Preparation
+
+## Get Started
+
+## View Texture-GS with OpenGL
+
+## Train Texture-GS from Scratch
+
+Our training stage is composed of three steps, including geometry reconstruction, UV mapping learning and texture reconstruction. First, run the training scripts `train.py` and specify the config file `configs/gaussian3d_base.yaml` to obtain the initial 3D Gaussian-based geometry, use `CUDA_VISIBLE_DEVICES` to specify the GPU number
+
+```shell
+python train.py configs/gaussian3d_base.yaml
+```
+
+The checkpoints, point clouds of 3D-GS, config files and tensorboard event file during training are saved to `output/gaussian3d_base/[timestamp1]/`. Then, extract a point cloud from the checkpoints to obtain a psedo ground truth point cloud that roughly covered the underlying surface for UV mapping learning. Run the scripts `extract_pcd.py` and specify path to the checkpoint.
+
+```shell
+python extract_pcd.py configs/gaussian3d_base.yaml \
+    --resume_from output/gaussian3d_base/[timestamp]/checkpoints/30000.pth \
+    --save_path output/gaussian3d_base/[timestamp1]/pcd.npy
+```
+
+The extracted point cloud `pcd.npy` as well as a ply file `pcd.ply` for visualization on VSCode (we recommend vscode-3d-preview extension) is generated in the save path. After obtaining the psedo GT, we can learn a UV mapping corresponding to the geometry with Chamfer Distance loss. Notably, you need to modify the following lines in the config file `configs/uv_map.yaml`
+
+```yaml
+    init_from: output/gaussian3d_base/[timestamp1]/checkpoints/30000.pth
+    pcd_load_from: output/gaussian3d_base/[timestamp1]/pcd.npy
+```
+
+Then, run the following training script. Notable, the `PSNR` `L1` and `SSIM` metrics output by the scripts are meaningless here, because we only concern about the geometry of 3D Gaussians.
+
+```shell
+python train.py configs/uv_map.yaml
+```
+
+The checkpoints, config files and tensorboard event file during training are saved to `output/uv_map/[timestamp2]/`. We also visualize the inverse UV mapping process in `output/uv_map/[timestamp2]/pcds/` by randomly sampling points on UV space and then projecting them back to 3D space. Finally, we modify the following lines in `configs/texture_gaussian3d.yaml` to specify the initial path for 3D Gaussian and UV mapping, and then train our Texture-GS
+
+```yaml
+    init_from: output/gaussian3d_base/[timestamp1]/checkpoints/30000.pth
+    init_uv_map_from: output/uv_map/[timestamp2]/checkpoints/15000.pth
+```
+
+```shell
+python train.py configs/texture_gaussian3d.yaml
+```
+
+We take the training process of DTU scan 118 as example. If you want to train Texture-GS on other scenes, such as DTU scan 122, just modify `data_root_dir` in all config files. We train our model with `800*600` resolution images on the DTU dataset to compare with previous works. However, the original resolution `1600*1200` is also supported by setting the following line `resolution: -1`. 
+
 ## Citation
 
 If you find this code useful for your research, please consider citing:
