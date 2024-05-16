@@ -38,12 +38,15 @@ Other dependencies have been listed in the `requirements.txt`.
 
 **DTU dataset**: We follow [Relightable 3D Gaussian](https://github.com/NJU-3DV/Relightable3DGaussian) to prepare DTU data, which contains a foreground mask and a psedo-ground truth normal maps for each scenes. Download the zip file of preprocessed DTU data [here](https://box.nju.edu.cn/f/d9858b670ab9480fb526/?dl=1) and then create a soft link to `data/dtu/`. 
 
-**NeRF Synthetic dataset**: Download the NeRF synthetic dataset from LINK[https://drive.google.com/drive/folders/1JDdLGDruGNXWnM1eqY1FNL9PlStjaKWi?usp=drive_link] provided by NeRF and then create a soft link to `data/nerf_synthetic/`.
-
-**Any obj file**: To create your synthetic dataset from obj files, such as Objaverse or Google Scanned Objects, we provide a preprocess script to render NeRF synthetic format dataset. Run the following script
+**Any obj file**: To create your synthetic dataset from obj files, such as Objaverse or Google Scanned Objects, we provide a preprocess script to render NeRF synthetic format dataset. We adopt `blender=3.6.11` to render images, with the params `elevs` and `num_renders` to speficy the elevation angles of camera poses and the number of images per elevation angles, respectively.
 
 ```shell
-
+cd scripts
+blender -noaudio --background --python render_obj_file.py -- \
+    --object_path path/to/your/obj/file \
+    --output_dir path/to/your/dataset \
+    --num_renders 12 \
+    --elevs -30 0 30 60
 ```
 
 :warning: **Limitations** :warning:: We define the texture space as a unit sphere, which is ill-suited to represent multiple objects, objects with complex geometry(e.g. NeRF Synthetic chair, lego) or outdoor scenes.
@@ -101,7 +104,7 @@ The checkpoints, point clouds of 3D-GS, config files and tensorboard event file 
 
 ```shell
 python extract_pcd.py configs/gaussian3d_base.yaml \
-    --resume_from output/gaussian3d_base/[timestamp]/checkpoints/30000.pth \
+    --resume_from output/gaussian3d_base/[timestamp1]/checkpoints/30000.pth \
     --save_path output/gaussian3d_base/[timestamp1]/pcd.npy
 ```
 
@@ -131,7 +134,16 @@ python train.py configs/texture_gaussian3d.yaml
 
 We take the training process of DTU scan 118 as example. If you want to train Texture-GS on other scenes, such as DTU scan 122, just modify `data_root_dir` in all config files. We train our model with `800*600` resolution images on the DTU dataset to compare with previous works. However, the original resolution `1600*1200` is also supported by setting the following line `resolution: -1`. 
 
-## Train Texture-GS on NeRF Synthetic format dataset from Scratch
+## Train Texture-GS on Object derived dataset from Scratch
+
+Due to the lack of psedo ground-truth normal maps, we train Texture-GS on object derived dataset with configure files `configs/gaussian3d_base_object.yaml` `configs/uv_map_object.yaml` and `configs/texture_gaussian3d_object.yaml`, which are slightly different from DTU configure files. Here's a simple example of STACKING_BEAR from GSO dataset.
+
+<p align="center">
+<img src="assets/images/0371.png" width="250"/>
+<img src="assets/images/0372.png" width="250"/>
+<img src="assets/images/0373.png" width="250"/>
+</p>
+
 
 
 ## Citation

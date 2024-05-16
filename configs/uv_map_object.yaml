@@ -1,0 +1,70 @@
+dataset_cfg:
+  type: scene
+  data_root_dir: 
+  # image_path: "images"
+  eval: False
+  background: [0, 0, 0]
+  save_init_pcd: True
+  save_cameras: True
+  shuffle: True
+  resolution_scales: [1.0]
+  resolution: -1
+
+model_cfg:
+  type: UVMapGaussian3D
+  init_from: 
+  pcd_load_from: 
+  background: [0, 0, 0]
+  uv_net_cfg:
+    emb_dim: 128
+    aabb_min: [-1, -1, -1]
+    aabb_max: [1, 1, 1]
+    pre_mlp_cfg:
+      use_tcnn: True
+      n_hidden_layers: 1
+      n_neurons: 128
+    mlp_cfg:
+      use_tcnn: True
+      n_hidden_layers: 2
+      n_neurons: 128
+  inv_uv_net_cfg:
+    emb_dim: 128
+    n_sample_points: 2048
+    patch_scale: 8
+    pre_mlp_cfg:
+      hash_grid_cfg:
+        n_levels: 8
+        n_features_per_level: 4
+        max_hashmap: 12
+      use_tcnn: True
+      n_hidden_layers: 1
+      n_neurons: 128
+    mlp_cfg:
+      use_tcnn: True
+      n_hidden_layers: 2
+      n_neurons: 128
+  geo_emb_dim: 128
+  
+render_cfg:
+  type: render
+  convert_SHs_python: False
+  compute_cov3D_python: False
+
+train_cfg:
+  num_iterations: 20000
+  visual_iters: [3000, 6000, 9000, 12000, 15000, 18000, 20000]
+  ckpt_iters: [3000, 6000, 9000, 12000, 15000, 18000, 20000]
+
+optim_cfg:
+  uv_net_lr: 0.0001
+  inv_uv_net_lr: 0.0001
+  uv_net_milestones: [15000, ]
+  uv_net_gamma: 0.33
+
+loss_cfg:
+  lambda_inverse: 1.0
+  inverse_range: [0, Null]
+  lambda_chamfer: 1.0
+  chamfer_range: [0, Null]
+  lambda_inverse2: 1.0
+  inverse_range2: [0, Null]

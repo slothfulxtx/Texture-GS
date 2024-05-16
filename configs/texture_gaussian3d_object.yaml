@@ -1,0 +1,84 @@
+dataset_cfg:
+  type: scene
+  data_root_dir: 
+  # image_path: "images"
+  eval: False
+  background: [0, 0, 0]
+  save_init_pcd: True
+  save_cameras: True
+  shuffle: True
+  resolution_scales: [1.0]
+  resolution: -1
+
+model_cfg:
+  type: TextureGaussian3D
+  init_from: 
+  init_uv_map_from: 
+  background: [0, 0, 0]
+  uv_net_cfg:
+    emb_dim: 128
+    pre_mlp_cfg:
+      use_tcnn: True
+      n_hidden_layers: 1
+      n_neurons: 128
+    mlp_cfg:
+      use_tcnn: True
+      n_hidden_layers: 2
+      n_neurons: 128
+  inv_uv_net_cfg:
+    emb_dim: 128
+    n_sample_points: 2048
+    pre_mlp_cfg:
+      hash_grid_cfg:
+        max_hashmap: 12
+        n_features_per_level: 4
+        n_levels: 8
+      use_tcnn: True
+      n_hidden_layers: 1
+      n_neurons: 128
+    mlp_cfg:
+      use_tcnn: True
+      n_hidden_layers: 2
+      n_neurons: 128
+  tex_cfg:
+    resolution: 1024
+    max_sh_degree: 3
+  geo_emb_dim: 128
+  
+render_cfg:
+  type: uv_tex_render
+
+train_cfg:
+  num_iterations: 40000
+  visual_iters: [5000, 10000, 15000, 20000, 25000, 30000, 35000, 40000]
+  ckpt_iters: [5000, 10000, 15000, 20000, 25000, 30000, 35000, 40000]
+  min_scale_reset_interval: 1000
+  
+optim_cfg:
+  uv_net_lr: 0.00002
+  inv_uv_net_lr: 0.00002
+  uv_net_milestones: [10000, 20000]
+  uv_net_gamma: 0.5
+
+  tex_optim_range: [0, Null]
+  tex_lr: 0.0025
+  
+  gaussian_optim_range: [10000, Null]
+  position_lr_init: 0.0001
+  position_lr_final: 0.000001
+  position_lr_delay_mult: 0.01
+  position_lr_max_steps: 30000
+  opacity_lr: 0.05
+  scaling_lr: 0.005
+  rotation_lr: 0.001
+  
+loss_cfg:
+  lambda_dssim: 0.2
+  rgb_range: [0, Null]
+  lambda_no_sh: 2.0
+  rgb_no_sh_range: [10000, Null]
+  lambda_alpha: 1.0
+  alpha_range: [10000, Null]
+  lambda_norm_smooth: 0.5
+  norm_smooth_range: [10000, Null]
+
