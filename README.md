@@ -8,6 +8,8 @@ The official repo for "[Texture-GS: Disentangling the Geometry and Texture for 3
 
 ## :mega: Updates
 
+[28/5/2024] The code is released, including training code, viewer and pretrained models.
+
 [18/3/2024] The project page is created.
 
 [18/3/2024] The official repo is initialized.
