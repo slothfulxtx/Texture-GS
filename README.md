@@ -8,6 +8,8 @@ The official repo for "[Texture-GS: Disentangling the Geometry and Texture for 3
 
 ## :mega: Updates
 
+[02/7/2024] Our paper is accepted by ECCV 2024. Welcome to discuss with us in MiCo Milano.
+
 [28/5/2024] The code is released, including training code, viewer and pretrained models.
 
 [18/3/2024] The project page is created.
