@@ -4,6 +4,7 @@ The official repo for "[Texture-GS: Disentangling the Geometry and Texture for 3
 <p align="center">
 <a href="https://arxiv.org/pdf/2403.10050.pdf"><img src="https://img.shields.io/badge/Arxiv-2403.10050-B31B1B.svg"></a>
 <a href="https://slothfulxtx.github.io/TexGS/"><img src="https://img.shields.io/badge/Project-Page-blue"></a>
+<a href="https://www.youtube.com/watch?v=mn_vi4a_fu4"><img src="https://img.shields.io/youtube/views/mn_vi4a_fu4"></a>
 </p>
 
 ## :mega: Updates
