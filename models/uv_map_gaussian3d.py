@@ -7,7 +7,7 @@ from utils.graphics import BasicPointCloud
 from plyfile import PlyData, PlyElement
 from utils.general import inverse_sigmoid
 from losses import *
-# from pytorch3d.loss import chamfer_distance
+from pytorch3d.loss import chamfer_distance
 import nvdiffrast.torch as dr
 
 from .modules.uv_net import UVNet, InvUVNet
